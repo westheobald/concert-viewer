@@ -1,0 +1,11 @@
+#concert__list {
+  display: grid;
+  grid-template-columns: repeat( auto-fill, minmax(320px, 1fr) );
+  column-gap: 10px;
+  row-gap: 40px;
+}
+
+.concert__thumbnail {
+  height: 160px;
+  background-color: red;
+}

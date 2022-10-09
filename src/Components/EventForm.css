@@ -1,0 +1,35 @@
+form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  background-color: aqua;
+  padding: 20px;
+}
+form label {
+  display: flex;
+  margin-bottom: 40px;
+  align-items: center
+}
+form input, form select {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  font-size: 18px;
+  flex-grow: 1;
+  margin-left: 20px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+}
+form p:first-of-type {
+  font-weight: 500;
+  font-size: 20px;
+  background-color: red;
+  color: white;
+  width: 100%;
+  border: 1px solid black;
+  text-align: center;
+  padding: 20px;
+}
+form p {
+  text-align: center;
+}
