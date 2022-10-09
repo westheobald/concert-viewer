@@ -30,7 +30,6 @@ export default function EventForm() {
       genre: genre,
       image: image,
     };
-    console.log(formData.image);
     const jsonData = JSON.stringify(formData);
     await fetch("https://wesleytheobald.com/api/concerts/", {
       method: "POST",
