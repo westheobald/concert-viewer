@@ -6,6 +6,7 @@ import HomePage from "./Pages/HomePage";
 import CreatePage from "./Pages/CreatePage";
 import SearchPage from "./Pages/SearchPage";
 import ConcertPage from "./Pages/ConcertPage";
+import EditPage from "./Pages/EditPage";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/concert/:id",
     element: <ConcertPage />,
+  },
+  {
+    path: "/edit/:id",
+    element: <EditPage />,
   },
 ]);
 

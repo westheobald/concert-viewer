@@ -2,17 +2,17 @@ import { useState, useRef } from "react";
 
 import { STATES } from "../Constants/States.mjs";
 
-export default function EventForm() {
-  const [artist, setArtist] = useState("");
-  const [venue, setVenue] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zipCode, setZipCode] = useState(undefined);
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
-  const [ticketLink, setTicketLink] = useState("");
-  const [genre, setGenre] = useState("");
-  const [image, setImage] = useState(undefined);
+export default function EventForm({ concert }) {
+  const [artist, setArtist] = useState(concert ? concert.artist : "");
+  const [venue, setVenue] = useState(concert ? concert.venue : "");
+  const [city, setCity] = useState(concert ? concert.city : "");
+  const [state, setState] = useState(concert ? concert.state : "");
+  const [zipCode, setZipCode] = useState(concert ? concert.zip : "");
+  const [date, setDate] = useState(concert ? concert.date : "");
+  const [time, setTime] = useState(concert ? concert.time : "");
+  const [ticketLink, setTicketLink] = useState(concert ? concert.tickets : "");
+  const [genre, setGenre] = useState(concert ? concert.genre : "");
+  const [image, setImage] = useState(concert ? concert.image : "");
   const errorMessage = useRef(null);
 
   async function handleSubmit(e) {
@@ -23,21 +23,25 @@ export default function EventForm() {
       venue: venue,
       city: city,
       state: state,
-      zipCode: zipCode,
+      zip: zipCode,
       date: date,
       time: time,
-      ticketLink: ticketLink,
+      tickets: ticketLink,
       genre: genre,
       image: image,
     };
+    const method = concert ? "PATCH" : "POST";
+    if (method === "PATCH") {
+      formData.id = concert._id;
+      console.log(formData);
+    }
     const jsonData = JSON.stringify(formData);
     await fetch("https://wesleytheobald.com/api/concerts/", {
-      method: "POST",
+      method: method,
       body: jsonData,
       headers: {
         "Content-Type": "application/json",
       },
-      enctype: "multipart/form-data",
     })
       .then((e) => {
         console.log("success");
@@ -59,6 +63,7 @@ export default function EventForm() {
           type="text"
           name="artist"
           onChange={(e) => setArtist(e.target.value)}
+          value={artist}
           required
         />
       </label>
@@ -68,6 +73,7 @@ export default function EventForm() {
           type="text"
           name="venue"
           onChange={(e) => setVenue(e.target.value)}
+          value={venue}
           required
         />
       </label>
@@ -77,6 +83,7 @@ export default function EventForm() {
           type="text"
           name="city"
           onChange={(e) => setCity(e.target.value)}
+          value={city}
           required
         />
       </label>
@@ -85,6 +92,7 @@ export default function EventForm() {
         <select
           name="state"
           onChange={(e) => setState(e.target.value)}
+          value={state}
           required
         >
           <option value=""></option>
@@ -103,6 +111,7 @@ export default function EventForm() {
           min="00001"
           max="99950"
           onChange={(e) => setZipCode(e.target.value)}
+          value={zipCode}
           required
         />
       </label>
@@ -112,6 +121,7 @@ export default function EventForm() {
           type="date"
           name="date"
           onChange={(e) => setDate(e.target.value)}
+          value={date}
           required
         />
       </label>
@@ -121,6 +131,7 @@ export default function EventForm() {
           type="time"
           name="time"
           onChange={(e) => setTime(e.target.value)}
+          value={time}
           required
         />
       </label>
@@ -130,6 +141,7 @@ export default function EventForm() {
           type="url"
           name="ticketLink"
           onChange={(e) => setTicketLink(e.target.value)}
+          value={ticketLink}
         />
       </label>
       <label htmlFor="genre">
@@ -138,6 +150,7 @@ export default function EventForm() {
           type="text"
           name="genre"
           onChange={(e) => setGenre(e.target.value)}
+          value={genre}
         />
       </label>
       <label htmlFor="image">
@@ -146,6 +159,7 @@ export default function EventForm() {
           type="file"
           name="image"
           onChange={(e) => setImage(e.target.files[0])}
+          value={image}
         />
       </label>
       <input type="submit"></input>

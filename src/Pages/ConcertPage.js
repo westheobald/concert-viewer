@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Header from "../Components/Header";
-import { formatDate, formatTime } from "../Helpers/ConvertDateTime";
 
 export default function ConcertPage() {
   const { id } = useParams();
   const [concert, setConcert] = useState();
   const [concertId, setConcertId] = useState(id);
 
-  async function handleEdit() {}
   async function handleDelete() {
     const res = await fetch(`https://wesleytheobald.com/api/concerts/${id}`, {
       method: "DELETE",
@@ -19,9 +17,8 @@ export default function ConcertPage() {
     const res = await fetch(
       `https://wesleytheobald.com/api/concerts/id/${id}`
     ).then((res) => res.json());
-    res.date = formatDate(res.date);
-    res.time = formatTime(res.time);
     setConcert(res);
+    console.log(res);
     setConcertId(res._id);
   }
   useEffect(() => {
@@ -39,12 +36,12 @@ export default function ConcertPage() {
           {concert.city}, {concert.state}
         </p>
         <h4>
-          {concert.date}, {concert.time}
+          {concert.dateFormatted}, {concert.timeFormatted}
         </h4>
         <div>
-          <p id="edit" onClick={handleEdit}>
-            edit
-          </p>
+          <Link to={`/edit/${concert._id}`} state={{ concert: concert }}>
+            <p id="edit">edit</p>
+          </Link>
           <p id="delete" onClick={handleDelete}>
             delete
           </p>

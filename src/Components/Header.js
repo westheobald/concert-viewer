@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { formatDate, formatTime } from "../Helpers/ConvertDateTime";
 
 export default function Header() {
   const [search, setSearch] = useState("");
@@ -11,10 +10,6 @@ export default function Header() {
     const query = encodeURIComponent(search);
     const url = `https://wesleytheobald.com/api/concerts/?search=${query}`;
     const res = await fetch(url).then((res) => res.json());
-    for (let concert of res) {
-      concert.date = formatDate(concert.date);
-      concert.time = formatTime(concert.time);
-    }
     navigate("/search", { state: { data: res, search: search } });
   }
   return (

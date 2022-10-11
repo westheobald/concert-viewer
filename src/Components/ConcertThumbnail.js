@@ -12,7 +12,7 @@ export default function ConcertThumbnail({ concert }) {
         {concert.venue} {concert.city}, {concert.state}
       </p>
       <p>
-        {concert.date} @ {concert.time}
+        {concert.dateFormatted} @ {concert.timeFormatted}
       </p>
     </Link>
   );
