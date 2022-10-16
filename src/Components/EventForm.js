@@ -14,10 +14,13 @@ export default function EventForm({ concert }) {
   const [genre, setGenre] = useState(concert ? concert.genre : "");
   const [image, setImage] = useState(concert ? concert.image : "");
   const errorMessage = useRef(null);
+  const successMessage = useRef(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
     errorMessage.current.classList.add("hidden");
+    successMessage.current.classList.add("hidden");
+
     const formData = {
       artist: artist,
       venue: venue,
@@ -33,7 +36,6 @@ export default function EventForm({ concert }) {
     const method = concert ? "PATCH" : "POST";
     if (method === "PATCH") {
       formData.id = concert._id;
-      console.log(formData);
     }
     const jsonData = JSON.stringify(formData);
     await fetch("https://wesleytheobald.com/api/concerts/", {
@@ -44,7 +46,14 @@ export default function EventForm({ concert }) {
       },
     })
       .then((e) => {
-        console.log("success");
+        if (method === "PATCH") {
+          successMessage.current.textContent =
+            "Success! Your event was edited successfully.";
+        } else {
+          successMessage.current.textContent =
+            "Success! Your event was created successfully.";
+        }
+        successMessage.current.classList.remove("hidden");
       })
       .catch((e) => {
         errorMessage.current.classList.remove("hidden");
@@ -57,6 +66,7 @@ export default function EventForm({ concert }) {
         Error! There was a problem with the validation of the form. Please
         ensure all required fields are filled out and try again.
       </p>
+      <p className="hidden" ref={successMessage}></p>
       <label htmlFor="artist">
         Artist*:
         <input

@@ -2,8 +2,8 @@ form {
   display: flex;
   flex-direction: column;
   max-width: 500px;
-  background-color: aqua;
   padding: 20px;
+  margin: 0 auto;
 }
 form label {
   display: flex;
@@ -17,10 +17,10 @@ form input, form select {
   flex-grow: 1;
   margin-left: 20px;
   height: 40px;
-  border: none;
+  border: 1px #333 solid;
   border-radius: 10px;
 }
-form p:first-of-type {
+form p:first-of-type, form p:nth-of-type(2) {
   font-weight: 500;
   font-size: 20px;
   background-color: red;
@@ -29,6 +29,9 @@ form p:first-of-type {
   border: 1px solid black;
   text-align: center;
   padding: 20px;
+}
+form P:nth-of-type(2) {
+  background-color: green;
 }
 form p {
   text-align: center;

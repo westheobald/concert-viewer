@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import Header from "../Components/Header";
 
 export default function ConcertPage() {
   const { id } = useParams();
   const [concert, setConcert] = useState();
   const [concertId, setConcertId] = useState(id);
+  const navigate = useNavigate();
 
   async function handleDelete() {
     const res = await fetch(`https://wesleytheobald.com/api/concerts/${id}`, {
       method: "DELETE",
-    });
+    })
+      .then((e) => {
+        navigate("/");
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
   async function getConcertInfo() {
@@ -40,11 +47,11 @@ export default function ConcertPage() {
         </h4>
         <div>
           <Link to={`/edit/${concert._id}`} state={{ concert: concert }}>
-            <p id="edit">edit</p>
+            <button id="edit">edit</button>
           </Link>
-          <p id="delete" onClick={handleDelete}>
+          <button id="delete" onClick={handleDelete}>
             delete
-          </p>
+          </button>
         </div>
       </>
     );
